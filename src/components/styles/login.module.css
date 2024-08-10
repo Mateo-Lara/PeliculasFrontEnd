@@ -1,0 +1,96 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: url("/images/peliculas.jpg") no-repeat center center;
+    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+    margin: 0;
+}
+
+
+.form-container {
+    width: 500px;
+    padding: 50px;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-box input {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.remember-forgot .input {
+    color: #fff;
+    display: flex;
+    font-size: 14.5px;
+    align-items: center;
+}
+
+.remember-forgot span {
+    color: #fff;
+    margin-left: 4px;
+}
+
+.remember-forgot a {
+    color: #fff;
+    display: flex;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.remember-forgot a:hover{
+    text-decoration: underline;
+}
+
+.submit-button {
+    width: 100%;
+    height: 40px;
+    background-color: #575757;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.submit-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.error {
+    color: #fff;
+}
