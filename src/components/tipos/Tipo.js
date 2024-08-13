@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { crearTipo, obtenerTipo, borrarTipo } from '../../services/TipoService';
 import Title from '../ui/Title';
 import Modal from './Modal';
@@ -11,9 +12,16 @@ export default function Tipo() {
     descripcion: '',
   });
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    listarTipos();
-  }, []);
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      navigate('/login');
+    } else {
+      listarTipos();
+    }
+  }, [navigate]);
 
   const listarTipos = async () => {
     try {

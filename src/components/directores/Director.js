@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { crearDirector, obtenerDirector, borrarDirector } from '../../services/DirectorService';
 import Title from '../ui/Title';
 import Modal from './Modal';
@@ -10,9 +11,16 @@ export default function Director() {
     estado: '',
   });
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    listarDirectores();
-  }, []);
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      navigate('/login'); // Redirigir al login si no hay token
+    } else {
+      listarDirectores();
+    }
+  }, [navigate]); // Añadir navigate como dependencia
 
   const getHeaders = () => {
     const token = localStorage.getItem('access_token');

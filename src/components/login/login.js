@@ -15,7 +15,7 @@ function LoginPage() {
     setErrors([]);
 
     try {
-      const response = await fetch('http://localhost:4000/auth', {
+      const response = await fetch('https://peliculasbackend-lara.onrender.com/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ function LoginPage() {
       if (response.ok) {
         if (data.rol === 'Administrador') {
           localStorage.setItem('access_token', data.access_token);
-          navigate('/');
+          navigate('/directores');
         } else {
           localStorage.removeItem('access_token');
         }

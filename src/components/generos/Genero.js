@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { crearGenero, obtenerGeneros, borrarGenero } from '../../services/GeneroService';
 import Title from '../ui/Title';
 import Modal from './Modal';
@@ -12,9 +13,16 @@ export default function Genero() {
     descripcion: '',
   });
 
+  const navigate = useNavigate(); // Hook para navegar entre rutas
+
   useEffect(() => {
-    listarGeneros();
-  }, []);
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      navigate('/login');
+    } else {
+      listarGeneros();
+    }
+  }, [navigate]);
 
   const listarGeneros = async () => {
     try {

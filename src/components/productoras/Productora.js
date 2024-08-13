@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { crearProductora, obtenerProductoras, borrarProductora } from '../../services/ProductoraService';
 import Title from '../ui/Title';
 import Modal from './Modal';
@@ -13,9 +14,16 @@ export default function Productora() {
     descripcion: '',
   });
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    listarProductoras();
-  }, []);
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      navigate('/login');
+    } else {
+      listarProductoras();
+    }
+  }, [navigate]);
 
   const listarProductoras = async () => {
     try {
@@ -47,10 +55,10 @@ export default function Productora() {
 
   const clearForm = () => {
     setProductora({
-        nombreProductora: '',
-        estado: '',
-        slogan: '',
-        descripcion: '',
+      nombreProductora: '',
+      estado: '',
+      slogan: '',
+      descripcion: '',
     });
   }
 
