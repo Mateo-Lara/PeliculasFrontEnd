@@ -20,7 +20,7 @@ export default function Director() {
     } else {
       listarDirectores();
     }
-  }, [navigate]); // Añadir navigate como dependencia
+  }, [navigate, listarDirectores]); // Añadir navigate como dependencia
 
   const getHeaders = () => {
     const token = localStorage.getItem('access_token');

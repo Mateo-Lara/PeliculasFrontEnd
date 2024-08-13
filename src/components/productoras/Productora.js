@@ -23,7 +23,7 @@ export default function Productora() {
     } else {
       listarProductoras();
     }
-  }, [navigate]);
+  }, [navigate, listarProductoras]);
 
   const listarProductoras = async () => {
     try {

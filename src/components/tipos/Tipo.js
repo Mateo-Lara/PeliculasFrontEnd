@@ -21,7 +21,7 @@ export default function Tipo() {
     } else {
       listarTipos();
     }
-  }, [navigate]);
+  }, [navigate, listarTipos]);
 
   const listarTipos = async () => {
     try {

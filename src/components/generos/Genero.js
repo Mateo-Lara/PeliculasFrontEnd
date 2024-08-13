@@ -22,7 +22,7 @@ export default function Genero() {
     } else {
       listarGeneros();
     }
-  }, [navigate]);
+  }, [navigate, listarGeneros]);
 
   const listarGeneros = async () => {
     try {
