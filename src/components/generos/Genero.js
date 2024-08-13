@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { crearGenero, obtenerGeneros, borrarGenero } from '../../services/GeneroService';
 import Title from '../ui/Title';
@@ -13,7 +12,16 @@ export default function Genero() {
     descripcion: '',
   });
 
-  const navigate = useNavigate(); // Hook para navegar entre rutas
+  const navigate = useNavigate(); 
+
+  const listarGeneros = useCallback(async () => {
+    try {
+      const { data } = await obtenerGeneros();
+      setGeneros(data);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []); 
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -22,16 +30,7 @@ export default function Genero() {
     } else {
       listarGeneros();
     }
-  }, [navigate, listarGeneros]);
-
-  const listarGeneros = async () => {
-    try {
-      const { data } = await obtenerGeneros();
-      setGeneros(data);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  }, [navigate, listarGeneros]); 
 
   const guardar = async () => {
     try {
@@ -42,15 +41,14 @@ export default function Genero() {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const handleChange = (e) => {
-    console.log(e.target);
     setGenero({
       ...genero,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   const clearForm = () => {
     setGenero({
@@ -58,21 +56,21 @@ export default function Genero() {
       estado: '',
       descripcion: '',
     });
-  }
+  };
 
-  const borrarGeneroPorId = async (e) => {
+  const borrarGeneroPorId = async (id) => {
     try {
-      const response = await borrarGenero(e);
+      const response = await borrarGenero(id);
       setGeneros(response);
       listarGeneros();
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const borrarPorId = (generoId) => {
     borrarGeneroPorId(generoId);
-  }
+  };
 
   return (
     <>

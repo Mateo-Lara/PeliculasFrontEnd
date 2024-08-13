@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { crearTipo, obtenerTipo, borrarTipo } from '../../services/TipoService';
 import Title from '../ui/Title';
@@ -14,6 +13,15 @@ export default function Tipo() {
 
   const navigate = useNavigate();
 
+  const listarTipos = useCallback(async () => {
+    try {
+      const { data } = await obtenerTipo();
+      setTipos(data);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []); 
+
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -21,16 +29,7 @@ export default function Tipo() {
     } else {
       listarTipos();
     }
-  }, [navigate, listarTipos]);
-
-  const listarTipos = async () => {
-    try {
-      const { data } = await obtenerTipo();
-      setTipos(data);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  }, [navigate, listarTipos]); 
 
   const guardar = async () => {
     try {
@@ -41,36 +40,35 @@ export default function Tipo() {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const handleChange = (e) => {
-    console.log(e.target);
     setTipo({
       ...tipo,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   const clearForm = () => {
     setTipo({
       nombre: '',
       descripcion: '',
     });
-  }
+  };
 
-  const borrarTipoPorId = async (e) => {
+  const borrarTipoPorId = async (id) => {
     try {
-      const response = await borrarTipo(e);
+      const response = await borrarTipo(id);
       setTipos(response);
       listarTipos();
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
-  const borrarPorId = (directorId) => {
-    borrarTipoPorId(directorId);
-  }
+  const borrarPorId = (tipoId) => {
+    borrarTipoPorId(tipoId);
+  };
 
   return (
     <>
@@ -81,7 +79,7 @@ export default function Tipo() {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Tipo</th>
-              <th scope="col">descripcion</th>
+              <th scope="col">Descripción</th>
               <th scope="col">Opciones</th>
             </tr>
           </thead>
@@ -109,7 +107,7 @@ export default function Tipo() {
               ))
             ) : (
               <tr>
-                <td colSpan="5">
+                <td colSpan="4">
                   <p>Cargando tabla.</p>
                 </td>
               </tr>
@@ -130,4 +128,3 @@ export default function Tipo() {
     </>
   );
 }
-

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { crearDirector, obtenerDirector, borrarDirector } from '../../services/DirectorService';
 import Title from '../ui/Title';
@@ -13,21 +13,7 @@ export default function Director() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-      navigate('/login'); // Redirigir al login si no hay token
-    } else {
-      listarDirectores();
-    }
-  }, [navigate, listarDirectores]); // Añadir navigate como dependencia
-
-  const getHeaders = () => {
-    const token = localStorage.getItem('access_token');
-    return token ? { Authorization: `${token}` } : {};
-  };
-
-  const listarDirectores = async () => {
+  const listarDirectores = useCallback(async () => {
     try {
       const headers = getHeaders();
       const { data } = await obtenerDirector(headers);
@@ -35,6 +21,20 @@ export default function Director() {
     } catch (e) {
       console.log(e);
     }
+  }, []); 
+
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      navigate('/login'); 
+    } else {
+      listarDirectores(); 
+    }
+  }, [navigate, listarDirectores]); 
+
+  const getHeaders = () => {
+    const token = localStorage.getItem('access_token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
   };
 
   const guardar = async () => {

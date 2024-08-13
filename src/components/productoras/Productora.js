@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { crearProductora, obtenerProductoras, borrarProductora } from '../../services/ProductoraService';
 import Title from '../ui/Title';
@@ -16,6 +15,15 @@ export default function Productora() {
 
   const navigate = useNavigate();
 
+  const listarProductoras = useCallback(async () => {
+    try {
+      const { data } = await obtenerProductoras();
+      setProductoras(data);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []); 
+
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -23,16 +31,7 @@ export default function Productora() {
     } else {
       listarProductoras();
     }
-  }, [navigate, listarProductoras]);
-
-  const listarProductoras = async () => {
-    try {
-      const { data } = await obtenerProductoras();
-      setProductoras(data);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  }, [navigate, listarProductoras]); 
 
   const guardar = async () => {
     try {
@@ -43,15 +42,14 @@ export default function Productora() {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const handleChange = (e) => {
-    console.log(e.target);
     setProductora({
       ...productora,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   const clearForm = () => {
     setProductora({
@@ -60,21 +58,21 @@ export default function Productora() {
       slogan: '',
       descripcion: '',
     });
-  }
+  };
 
-  const borrarProductoraPorId = async (e) => {
+  const borrarProductoraPorId = async (id) => {
     try {
-      const response = await borrarProductora(e);
+      const response = await borrarProductora(id);
       setProductoras(response);
       listarProductoras();
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
-  const borrarPorId = (directorId) => {
-    borrarProductoraPorId(directorId);
-  }
+  const borrarPorId = (productoraId) => {
+    borrarProductoraPorId(productoraId);
+  };
 
   return (
     <>
@@ -117,7 +115,7 @@ export default function Productora() {
               ))
             ) : (
               <tr>
-                <td colSpan="5">
+                <td colSpan="6">
                   <p>Cargando tabla.</p>
                 </td>
               </tr>
@@ -138,4 +136,3 @@ export default function Productora() {
     </>
   );
 }
-
