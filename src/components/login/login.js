@@ -74,7 +74,7 @@ function LoginPage() {
         )}
         <div className={styles['remember-forgot']}>
           <label><input type="checkbox" /> <span>Recuérdame</span></label>
-          <a href="#">¿Olvidaste tu contraseña?</a>
+          <a href="/login">¿Olvidaste tu contraseña?</a>
         </div>
         <button className={styles['submit-button']} type="submit">Inicia sesión</button>
       </form>
