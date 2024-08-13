@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import NavBar from '../components/ui/NavBar';
 import Genero from '../components/generos/Genero';
 import Director from '../components/directores/Director';
@@ -20,6 +20,7 @@ export default function AppRouter() {
       {!hideNavBar && <NavBar />}
       <div className="container">
         <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/generos" element={<Genero />} />
           <Route path="/directores" element={<Director />} />
           <Route path="/productoras" element={<Productora />} />
