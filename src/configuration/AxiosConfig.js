@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosConfig = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL || 'https://peliculasbackend-lara.onrender.com'
+    baseURL: process.env.REACT_APP_BASE_URL
 });
 
 // Añadir un interceptor para incluir el token en cada solicitud
